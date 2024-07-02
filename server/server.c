@@ -30,10 +30,10 @@ void	handler(int sig)
 
 int	main(void)
 {
-	struct sigaction	da;
+	struct sigaction	sa;
 
-	da.sa_handler = handler;
-	da.sa_flags = SA_RESTART;
+	sa.sa_handler = handler;
+	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &da, NULL);
 	sigaction(SIGUSR2, &da, NULL);
