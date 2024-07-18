@@ -6,11 +6,13 @@
 /*   By: rafpetro <rafpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:24:05 by rafpetro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:21:24 by rafpetro         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:25:06 by rafpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+volatile sig_atomic_t acknowledged = 0;
 
 int	ft_atoi(const char *nptr)
 {
@@ -67,7 +69,7 @@ void	sig_sender(unsigned char c, int id)
 void	recive_handler(int sig)
 {
 	if (sig == SIGUSR1)
-		write(1, "Ekav\n", 5);
+		write(1, "Tpel\n", 5);
 }
 
 int	main(int argc, char **argv)

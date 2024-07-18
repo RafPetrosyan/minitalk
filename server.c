@@ -6,7 +6,7 @@
 /*   By: rafpetro <rafpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:24:14 by rafpetro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:24:37 by rafpetro         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:27:55 by rafpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 		write (1, &c, 1);
 		bit = 0;
 		c = 0;
+		kill(info->si_pid, SIGUSR1);
 	}
 }
 
@@ -51,6 +52,7 @@ int	main(void)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	ft_putnbr(getpid());
+	write(1, "\n", 1);
 	while (1)
 		pause();
 	return (0);
