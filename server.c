@@ -6,7 +6,7 @@
 /*   By: rafpetro <rafpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:24:14 by rafpetro          #+#    #+#             */
-/*   Updated: 2024/07/18 18:56:55 by rafpetro         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:24:37 by rafpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	handler(int sig, siginfo_t *info, void *context)
 	if (bit == 8)
 	{
 		write (1, &c, 1);
-		kill(info->si_pid, SIGUSR1);
 		bit = 0;
 		c = 0;
 	}
