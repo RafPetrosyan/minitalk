@@ -6,13 +6,13 @@
 /*   By: rafpetro <rafpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:24:05 by rafpetro          #+#    #+#             */
-/*   Updated: 2024/07/18 20:25:06 by rafpetro         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:51:47 by rafpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-volatile sig_atomic_t acknowledged = 0;
+int	g_count;
 
 int	ft_atoi(const char *nptr)
 {
@@ -60,7 +60,7 @@ void	sig_sender(unsigned char c, int id)
 			kill(id, SIGUSR1);
 		else
 			kill(id, SIGUSR2);
-		usleep(1000);
+		usleep(500);
 		c = c >> 1;
 		++i;
 	}
@@ -69,7 +69,10 @@ void	sig_sender(unsigned char c, int id)
 void	recive_handler(int sig)
 {
 	if (sig == SIGUSR1)
-		write(1, "Tpel\n", 5);
+	{
+		write(1, "Accepted\n", 9);
+		++g_count;
+	}
 }
 
 int	main(int argc, char **argv)
@@ -78,18 +81,25 @@ int	main(int argc, char **argv)
 	int				id;
 
 	i = 0;
+	signal(SIGUSR1, recive_handler);
 	if (argc <= 2)
 	{
 		write(1, "Incorrect number of parameters\n", 31);
 		return (0);
 	}
-	signal(SIGUSR1, recive_handler);
 	id = ft_atoi(argv[1]);
 	while (argv[2][i] != '\0')
 	{
 		sig_sender(argv[2][i], id);
 		++i;
 	}
-	ft_putnbr((unsigned int)i);
+	if (i == g_count)
+	{
+		write(1, "\n\t\tSuccessful\n\t\t   ", 19);
+		ft_putnbr(i);
+		write(1, "\n\tWhat was sent is what was received.\n", 38);
+	}
+	else
+		exit(write(2, "Error\n", 6));
 	return (0);
 }
