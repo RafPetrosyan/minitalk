@@ -69,10 +69,7 @@ void	sig_sender(unsigned char c, int id)
 void	recive_handler(int sig)
 {
 	if (sig == SIGUSR1)
-	{
-		write(1, "Accepted\n", 9);
 		++g_count;
-	}
 }
 
 int	main(int argc, char **argv)
